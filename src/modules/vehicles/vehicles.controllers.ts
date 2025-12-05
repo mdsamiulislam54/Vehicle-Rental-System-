@@ -10,6 +10,34 @@ const createvehicle = async (req: Request, res: Response) => {
                 "data": vehicles.rows[0]
             }
         )
+
+
+    } catch (error) {
+        res.status(500).json({ message: "Vehicles Create Unsucessfully!" })
+    }
+}
+const getAllVehicles = async (req: Request, res: Response) => {
+    try {
+        const vehicles = await vehiclesServices.getAllVehicles();
+
+        if (vehicles.rows.length === 0) {
+            res.status(200).json(
+                {
+                    "success": true,
+                    "message": "No vehicles found",
+                    "data": vehicles.rows
+                }
+            )
+        }
+        res.status(201).json(
+            {
+                "success": true,
+                "message": "Vehicles retrieved successfully",
+                "data": vehicles.rows
+            }
+        )
+
+
     } catch (error) {
         res.status(500).json({ message: "Vehicles Create Unsucessfully!" })
     }
@@ -17,5 +45,6 @@ const createvehicle = async (req: Request, res: Response) => {
 
 
 export const vehiclesController = {
-    createvehicle
+    createvehicle,
+    getAllVehicles
 }

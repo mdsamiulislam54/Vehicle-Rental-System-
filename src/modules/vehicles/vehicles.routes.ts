@@ -3,7 +3,7 @@ import { vehiclesController } from "./vehicles.controllers";
 
 const router = express.Router();
 
-router.get('/');
+router.get('/vehicles', vehiclesController.getAllVehicles);
 
 router.post("/vehicles", vehiclesController.createvehicle);
 
