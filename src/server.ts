@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express'
 import config from './config';
 import { initDB } from './config/db';
+import { authRouters } from './modules/auth/auth.route';
 
 const app = express();
 
@@ -11,6 +12,7 @@ initDB().then(() => {
 });
 
 app.use(express.json());
+app.use('/api/v1', authRouters)
 
 
 

@@ -1,19 +1,16 @@
 
 import pg from 'pg';
 import config from '.';
-
-
 export const pool = new pg.Pool({
     connectionString: config.connectionString,
     ssl: false
 });
 
 export const initDB = async () => {
- 
     await pool.query(`
         CREATE TABLE IF NOT EXISTS users (
             id SERIAL PRIMARY KEY,
-            name VARCHAR(100) NOT NULL,
+            name VARCHAR(200) NOT NULL,
             email VARCHAR(200) UNIQUE NOT NULL,
             password VARCHAR(100) NOT NULL,
             phone VARCHAR(100) NOT NULL,
