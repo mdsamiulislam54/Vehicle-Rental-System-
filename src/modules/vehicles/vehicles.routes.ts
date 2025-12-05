@@ -5,9 +5,10 @@ const router = express.Router();
 
 router.get('/vehicles', vehiclesController.getAllVehicles);
 router.get('/vehicles/:vehicleId', vehiclesController.getAllVehiclesById);
+router.put('/vehicles/:vehicleId', vehiclesController.updateVehiclesById);
 
 router.post("/vehicles", vehiclesController.createvehicle);
 
 
 
-export const vehiclesRouters =  router
+export const vehiclesRouters = router

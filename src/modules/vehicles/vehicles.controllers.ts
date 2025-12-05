@@ -45,7 +45,7 @@ const getAllVehicles = async (req: Request, res: Response) => {
 
 const getAllVehiclesById = async (req: Request, res: Response) => {
     try {
-        const {vehicleId} = req.params;
+        const { vehicleId } = req.params;
         console.log(vehicleId)
         const vehicles = await vehiclesServices.getAllVehiclesById(vehicleId);
         res.status(200).json(
@@ -62,8 +62,28 @@ const getAllVehiclesById = async (req: Request, res: Response) => {
     }
 }
 
+const updateVehiclesById = async (req: Request, res: Response) => {
+    try {
+        const { vehicleId } = req.params;
+
+        const vehicles = await vehiclesServices.updateVehiclesById(vehicleId, req.body);
+        res.status(200).json(
+            {
+                "success": true,
+                "message": "Vehicle updated successfully",
+                "data": vehicles.rows[0]
+            }
+        )
+
+
+    } catch (error) {
+        res.status(500).json({ message: "Vehicles update Failed!" })
+    }
+}
+
 export const vehiclesController = {
     createvehicle,
     getAllVehicles,
-    getAllVehiclesById
+    getAllVehiclesById,
+    updateVehiclesById
 }
