@@ -46,7 +46,6 @@ const getAllVehicles = async (req: Request, res: Response) => {
 const getAllVehiclesById = async (req: Request, res: Response) => {
     try {
         const { vehicleId } = req.params;
-        console.log(vehicleId)
         const vehicles = await vehiclesServices.getAllVehiclesById(vehicleId);
         res.status(200).json(
             {
@@ -65,7 +64,6 @@ const getAllVehiclesById = async (req: Request, res: Response) => {
 const updateVehiclesById = async (req: Request, res: Response) => {
     try {
         const { vehicleId } = req.params;
-
         const vehicles = await vehiclesServices.updateVehiclesById(vehicleId, req.body);
         res.status(200).json(
             {
@@ -81,9 +79,27 @@ const updateVehiclesById = async (req: Request, res: Response) => {
     }
 }
 
+const deleteVehiclesById = async (req: Request, res: Response) => {
+    try {
+        const { vehicleId } = req.params;
+        await vehiclesServices.deleteVehiclesById(vehicleId);
+        res.status(200).json(
+            {
+                "success": true,
+                "message": "Vehicle deleted successfully"
+            }
+        )
+
+
+    } catch (error) {
+        res.status(500).json({ message: "Vehicles deleted Unsucessfully!" })
+    }
+}
+
 export const vehiclesController = {
     createvehicle,
     getAllVehicles,
     getAllVehiclesById,
-    updateVehiclesById
+    updateVehiclesById,
+    deleteVehiclesById
 }
