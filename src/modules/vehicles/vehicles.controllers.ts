@@ -39,12 +39,31 @@ const getAllVehicles = async (req: Request, res: Response) => {
 
 
     } catch (error) {
-        res.status(500).json({ message: "Vehicles Create Unsucessfully!" })
+        res.status(500).json({ message: "Vehicles  vehicles Not found!" })
     }
 }
 
+const getAllVehiclesById = async (req: Request, res: Response) => {
+    try {
+        const {vehicleId} = req.params;
+        console.log(vehicleId)
+        const vehicles = await vehiclesServices.getAllVehiclesById(vehicleId);
+        res.status(200).json(
+            {
+                "success": true,
+                "message": "Vehicles retrieved successfully",
+                "data": vehicles.rows[0]
+            }
+        )
+
+
+    } catch (error) {
+        res.status(500).json({ message: "Vehicles retrieved Unsucessfully!" })
+    }
+}
 
 export const vehiclesController = {
     createvehicle,
-    getAllVehicles
+    getAllVehicles,
+    getAllVehiclesById
 }
