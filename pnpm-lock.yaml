@@ -17,9 +17,6 @@ importers:
       pg:
         specifier: ^8.16.3
         version: 8.16.3
-      tsc:
-        specifier: ^2.0.4
-        version: 2.0.4
     devDependencies:
       '@types/bcrypt':
         specifier: ^6.0.0
@@ -326,10 +323,6 @@ packages:
     resolution: {integrity: sha512-UcjcJOWknrNkF6PLX83qcHM6KHgVKNkV62Y8a5uYDVv9ydGQVwAHMKqHdJje1VTWpljG0WYpCDhrCdAOYH4TWg==}
     engines: {node: '>= 10.x'}
 
-  tsc@2.0.4:
-    resolution: {integrity: sha512-fzoSieZI5KKJVBYGvwbVZs/J5za84f2lSTLPYf6AGiIf43tZ3GNrI1QzTLcjtyDDP4aLxd46RTZq1nQxe7+k5Q==}
-    hasBin: true
-
   tsx@4.21.0:
     resolution: {integrity: sha512-5C1sg4USs1lfG0GFb2RLXsdpXqBSEhAaA/0kPL01wxzpMqLILNxIxIOKiILz+cdg/pLnOUxFYOR5yhHU666wbw==}
     engines: {node: '>=18.0.0'}
@@ -580,8 +573,6 @@ snapshots:
   resolve-pkg-maps@1.0.0: {}
 
   split2@4.2.0: {}
-
-  tsc@2.0.4: {}
 
   tsx@4.21.0:
     dependencies:

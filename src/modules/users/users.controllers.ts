@@ -3,7 +3,7 @@ import { userServices } from "./users.services";
 
 const getAllUsers = async (req: Request, res: Response) => {
     try {
-        const users = await  userServices.getAllUsers();
+        const users = await userServices.getAllUsers();
         res.status(200).json(
             {
                 "success": true,
@@ -19,12 +19,12 @@ const getAllUsers = async (req: Request, res: Response) => {
 }
 const updateUser = async (req: Request, res: Response) => {
     try {
-        const {userId} = req.params;
-        const updateUser = await  userServices.updateUser(req.body, userId);
+        const { userId } = req.params;
+        const updateUser = await userServices.updateUser(req.body, userId);
         res.status(200).json(
             {
                 "success": true,
-                 "message": "User updated successfully",
+                "message": "User updated successfully",
                 "data": updateUser.rows[0]
             }
         )
@@ -34,8 +34,25 @@ const updateUser = async (req: Request, res: Response) => {
         res.status(500).json({ message: "User not update !" })
     }
 }
+const deleteUser = async (req: Request, res: Response) => {
+    try {
+        const { userId } = req.params;
+        await userServices.deleteUser(userId);
+        res.status(200).json(
+            {
+                "success": true,
+                "message": "User deleted successfully"
+            }
+        )
+
+
+    } catch (error) {
+        res.status(500).json({ message: "User deleted Unsuccessfully!" })
+    }
+}
 
 export const userController = {
     getAllUsers,
-    updateUser
+    updateUser,
+    deleteUser
 }
