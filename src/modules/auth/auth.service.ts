@@ -26,9 +26,11 @@ const signin = async (playLoad: Record<string, unknown>) => {
         expiresIn: "7d"
     })
 
+    delete user.rows[0].password
+
     return {
         token: token,
-        user: user
+        user: user.rows[0]
 }
 }
 
