@@ -6,6 +6,7 @@ export const pool = new pg.Pool({
     ssl: false
 });
 
+
 export const initDB = async () => {
     await pool.query(`
         CREATE TABLE IF NOT EXISTS users (
@@ -21,10 +22,10 @@ export const initDB = async () => {
         CREATE TABLE IF NOT EXISTS vehicles (
             id SERIAL PRIMARY KEY,
             vehicle_name VARCHAR(100) NOT NULL,
-            type ENUM ('car', 'bike', 'van', 'SUV') NOT NULL,
+            type  VARCHAR(20)  NOT NULL,
             registration_number VARCHAR(100) NOT NULL,
             daily_rent_price INT NOT NULL,
-            availability_status  ENUM ('available', 'booked') NOT NULL
+            availability_status VARCHAR(20)  NOT NULL
         )
     `);
 
@@ -36,7 +37,7 @@ export const initDB = async () => {
                 rent_start_date DATE NOT NULL,
                 rent_end_date  DATE NOT NULL,
                 total_price INT NOT NULL, 
-                status ENUM ('active', 'cancelled','returned') NOT NULL
+                status  VARCHAR(20)   NOT NULL
             )
         `)
 };
