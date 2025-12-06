@@ -47,6 +47,7 @@ const getAllBookingAdmin = async () => {
 }
 const getAllBookingCustomer = async () => {
     const booking = await pool.query(`SELECT * FROM bookings`);
+    delete booking.rows[0].customer_id;
     const data = [];
     for (const booing of booking.rows) {
         const vehicle = await pool.query(
@@ -56,16 +57,53 @@ const getAllBookingCustomer = async () => {
 
         data.push({
             ...booking.rows[0],
-           
+
             vehicles: vehicle.rows[0]
         })
     }
     return data
 }
 
+const updateBooking = async (status: string, user: Record<string, unknown>, id: any) => {
 
+
+    if (!status) {
+        return null
+    };
+
+    const allowedRole: Record<string, string[]> = {
+        customer: ["cancelled"],
+        admin: ["returned"]
+    }
+
+    if (!allowedRole[user.role as string]?.includes(status as string)) {
+        return null
+    }
+
+
+    const bookingStatus = await pool.query(`
+                UPDATE bookings SET status=$1 WHERE id=$2 RETURNING *`, [status, id]
+    );
+
+    const { vehicle_id } = bookingStatus.rows[0];
+    let vehicles;
+    if (allowedRole['admin']?.includes(status as string)) {
+        vehicles = await pool.query(`
+                UPDATE vehicles SET availability_status=$1 WHERE id=$2 RETURNING availability_status`, ["available", vehicle_id]
+        );
+
+    }
+
+
+
+    return {bookingStatus, vehicles}
+
+
+
+}
 export const bookingServices = {
     createBooking,
     getAllBookingAdmin,
-    getAllBookingCustomer
+    getAllBookingCustomer,
+    updateBooking
 }

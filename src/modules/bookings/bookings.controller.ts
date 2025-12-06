@@ -46,7 +46,40 @@ const getAllBooking = async (req: Request, res: Response) => {
         })
     }
 }
+const bookingStatusUpdate = async (req: Request, res: Response) => {
+    try {
+        const user = req.user as JwtPayload
+        const { bookingId } = req.params;
+        const { status } = req.body;
+        const booking = await bookingServices.updateBooking(status, user, bookingId);
+
+
+        let message = '';
+        if (status === "cancelled" && user.role === 'customer') {
+            message = "Booking cancelled successfully";
+        }
+        else if (status === "returned" && user.role === 'admin') {
+            message = "Booking marked as returned. Vehicle is now available";
+        }
+        res.status(200).json({
+            "success": true,
+            "message": message,
+            "data": {
+                ...booking?.bookingStatus.rows[0],
+                vehicle: booking?.vehicles?.rows[0]
+            }
+
+        })
+    } catch (error) {
+        res.status(500).json({
+            message: " Booking cancelled Unsuccessfully", success: false,
+            errors: error,
+        })
+    }
+}
 export const bookingController = {
     createBooking,
-    getAllBooking
+    getAllBooking,
+    bookingStatusUpdate,
+
 }
