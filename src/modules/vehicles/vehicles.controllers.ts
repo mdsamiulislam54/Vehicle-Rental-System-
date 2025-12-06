@@ -13,7 +13,12 @@ const createvehicle = async (req: Request, res: Response) => {
 
 
     } catch (error) {
-        res.status(500).json({ message: "Vehicles Create Unsucessfully!" })
+        res.status(500).json({
+            message: "Vehicles Create Unsucessfully!",
+            success: false,
+            errors: error,
+
+        })
     }
 }
 const getAllVehicles = async (req: Request, res: Response) => {
@@ -39,7 +44,11 @@ const getAllVehicles = async (req: Request, res: Response) => {
 
 
     } catch (error) {
-        res.status(500).json({ message: "Vehicles  vehicles Not found!" })
+        res.status(500).json({
+            message: "Vehicles  vehicles Not found!",
+            success: false,
+            errors: error,
+        })
     }
 }
 
@@ -57,7 +66,10 @@ const getAllVehiclesById = async (req: Request, res: Response) => {
 
 
     } catch (error) {
-        res.status(500).json({ message: "Vehicles retrieved Unsucessfully!" })
+        res.status(500).json({
+            message: "Vehicles retrieved Unsucessfully!", success: false,
+            errors: error,
+        })
     }
 }
 
@@ -75,7 +87,10 @@ const updateVehiclesById = async (req: Request, res: Response) => {
 
 
     } catch (error) {
-        res.status(500).json({ message: "Vehicles update Failed!" })
+        res.status(500).json({
+            message: "Vehicles update Failed!", success: false,
+            errors: error,
+        })
     }
 }
 
@@ -92,7 +107,11 @@ const deleteVehiclesById = async (req: Request, res: Response) => {
 
 
     } catch (error) {
-        res.status(500).json({ message: "Vehicles deleted Unsucessfully!" })
+        res.status(500).json({
+            message: "Vehicles deleted Unsucessfully!",
+            success: false,
+            errors: error,
+        })
     }
 }
 

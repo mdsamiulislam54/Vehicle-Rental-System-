@@ -22,7 +22,14 @@ const signin = async (playLoad: Record<string, unknown>) => {
         role: user.rows[0].role,
         email: user.rows[0].email
     }
-    const token = jwt.sign({ payload }, config.jwt_secret as string, {
+
+    const hashPassword = user.rows[0].password;
+    const passwordMatch = await bcrypt.compare(password as string, hashPassword);
+
+    if (!passwordMatch) return null;
+
+
+    const token = jwt.sign(payload, config.jwt_secret as string, {
         expiresIn: "7d"
     })
 
@@ -31,7 +38,7 @@ const signin = async (playLoad: Record<string, unknown>) => {
     return {
         token: token,
         user: user.rows[0]
-}
+    }
 }
 
 

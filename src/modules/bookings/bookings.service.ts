@@ -23,7 +23,7 @@ const createBooking = async (payload: Record<string, unknown>) => {
 
 }
 
-const getAllBooking = async () => {
+const getAllBookingAdmin = async () => {
     const booking = await pool.query(`SELECT * FROM bookings`);
     const data = [];
     for (const booing of booking.rows) {
@@ -45,9 +45,27 @@ const getAllBooking = async () => {
     }
     return data
 }
+const getAllBookingCustomer = async () => {
+    const booking = await pool.query(`SELECT * FROM bookings`);
+    const data = [];
+    for (const booing of booking.rows) {
+        const vehicle = await pool.query(
+            `SELECT vehicle_name, registration_number,type FROM vehicles WHERE id = $1`,
+            [booing.vehicle_id]
+        );
+
+        data.push({
+            ...booking.rows[0],
+           
+            vehicles: vehicle.rows[0]
+        })
+    }
+    return data
+}
 
 
 export const bookingServices = {
     createBooking,
-    getAllBooking
+    getAllBookingAdmin,
+    getAllBookingCustomer
 }

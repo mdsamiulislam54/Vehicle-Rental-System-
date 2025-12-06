@@ -13,7 +13,10 @@ const signUp = async (req: Request, res: Response) => {
             }
         )
     } catch (error) {
-        res.status(500).json({ message: "User SignUp Unsuccessfully!", error })
+        res.status(500).json({
+            message: "User SignUp Unsuccessfully!", success: false,
+            errors: error,
+        })
     }
 }
 
@@ -23,10 +26,13 @@ const signin = async (req: Request, res: Response) => {
         res.status(200).json({
             "success": true,
             "message": "Login successful",
-            "data":user
+            "data": user
         })
     } catch (error) {
-        res.status(500).json({ message: "User singIn Unsuccessfully!", error })
+        res.status(500).json({
+            message: "User singIn Unsuccessfully!", success: false,
+            errors: error,
+        })
     }
 }
 export const authController = {
