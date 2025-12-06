@@ -25,7 +25,7 @@ export const initDB = async () => {
             type  VARCHAR(20)  NOT NULL,
             registration_number VARCHAR(100) NOT NULL,
             daily_rent_price INT NOT NULL,
-            availability_status VARCHAR(20)  NOT NULL
+            availability_status VARCHAR(20) DEFAULT 'active'  NOT NULL  
         )
     `);
 
@@ -34,10 +34,10 @@ export const initDB = async () => {
                 id  SERIAL  PRIMARY KEY ,
                 customer_id INT REFERENCES users(id) ON DELETE CASCADE,
                 vehicle_id INT REFERENCES vehicles(id) ON DELETE CASCADE ,
-                rent_start_date DATE NOT NULL,
-                rent_end_date  DATE NOT NULL,
+                rent_start_date VARCHAR(100) NOT NULL,
+                rent_end_date VARCHAR(100) NOT NULL,
                 total_price INT NOT NULL, 
-                status  VARCHAR(20)   NOT NULL
+                status  VARCHAR(20)  DEFAULT 'active'  
             )
         `)
 };
