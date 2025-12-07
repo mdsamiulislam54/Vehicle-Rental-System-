@@ -3,8 +3,8 @@ import { bookingController } from "./bookings.controller";
 import verify from "../../middleware/verifyRole";
 
 const router = express.Router();
-router.get('/bookings', verify('admin'), bookingController.getAllBooking);
-router.post('/bookings', bookingController.createBooking);
+router.get('/', verify('admin'), bookingController.getAllBooking);
+router.post('/', bookingController.createBooking);
 
 router.put('/bookings/:bookingId',verify('admin'), bookingController.bookingStatusUpdate);
 

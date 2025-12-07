@@ -1,9 +1,9 @@
 
 import pg from 'pg';
-import config from '.';
+import config from './index';
 export const pool = new pg.Pool({
-    connectionString: config.connectionString,
-    ssl: false
+    connectionString: `${config.connectionString}`,
+    ssl:false
 });
 
 
