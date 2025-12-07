@@ -4,7 +4,7 @@ import verify from "../../middleware/verifyRole";
 
 const router = express.Router();
 router.get('/', verify(), bookingController.getAllBooking);
-router.post('/', bookingController.createBooking);
+router.post('/',verify('admin','customer'), bookingController.createBooking);
 
 router.put('/:bookingId',verify(), bookingController.bookingStatusUpdate);
 
