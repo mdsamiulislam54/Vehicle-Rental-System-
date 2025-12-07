@@ -51,19 +51,26 @@ const bookingStatusUpdate = async (req: Request, res: Response) => {
         const user = req.user as JwtPayload
         const { bookingId } = req.params;
         const { status } = req.body;
+
+        if (status === "cancelled" && user.role !== 'customer') {
+            return res.status(403).json({
+                success: false,
+                message: "Only customers can cancel bookings"
+            });
+        }
+        else if (status === "returned" && user.role !== 'admin') {
+            return res.status(403).json({
+                success: false,
+                message: "Only admins can mark bookings as returned"
+            });
+        }
         const booking = await bookingServices.updateBooking(status, user, bookingId);
 
+        const message = status === "cancelled" ? "Booking cancelled successfully" : status === "returned" ? "Booking marked as returned. Vehicle is now available" :"Booking status updated";
 
-        let message = '';
-        if (status === "cancelled" && user.role === 'customer') {
-            message = "Booking cancelled successfully";
-        }
-        else if (status === "returned" && user.role === 'admin') {
-            message = "Booking marked as returned. Vehicle is now available";
-        }
         res.status(200).json({
             "success": true,
-            "message": message,
+             message,
             "data": {
                 ...booking?.bookingStatus.rows[0],
                 vehicle: booking?.vehicles?.rows[0]

@@ -2,7 +2,7 @@
 import { NextFunction, Request, Response } from "express"
 import jwt, { JwtPayload } from 'jsonwebtoken'
 import config from "../config";
-const verify = (...role: string[]) => {
+const verify = () => {
     return async (req: Request, res: Response, next: NextFunction) => {
         try {
             const token = req.headers.authorization?.split(' ')[1];
@@ -11,12 +11,6 @@ const verify = (...role: string[]) => {
 
             const decode = jwt.verify(token, config.jwt_secret as string) as JwtPayload;
          
-            if (role.length > 0 && !role.includes(decode.role as string)) {
-                return res.status(403).json({
-                    success: false,
-                    message: "Forbidden"
-                })
-            }
             if (decode) {
                 req.user = decode;
                 next()
